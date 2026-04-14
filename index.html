@@ -424,17 +424,110 @@
             line-height: 1.6;
         }
 
-        .google-form-container {
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
+        .email-input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
 
-        .google-form-container iframe {
-            border: none;
+        .email-input-wrapper i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8b5cf6;
+            font-size: 1.2rem;
+        }
+
+        .email-input-wrapper input {
             width: 100%;
-            height: 400px;
-            display: block;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .email-input-wrapper input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .email-action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .email-done-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.3s;
+        }
+
+        .email-done-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .email-skip-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.3s;
+        }
+
+        .email-skip-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+            transform: translateY(-2px);
+        }
+
+        .admin-email-list {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .admin-email-list h4 {
+            color: #c7d2fe;
+            margin-bottom: 1rem;
+        }
+
+        .admin-email-item {
+            background: rgba(139,92,246,0.1);
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-email-item small {
+            color: #71717a;
+            font-size: 0.7rem;
         }
 
         .dashboard {
@@ -510,6 +603,25 @@
             border-color: #ef4444;
             color: #ef4444;
             transform: translateY(-2px);
+        }
+
+        .admin-btn {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1.5px solid rgba(99, 102, 241, 0.3);
+            color: #a78bfa;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            color: #c7d2fe;
         }
 
         .tabs-wrapper {
@@ -1167,52 +1279,6 @@
             box-shadow: 0 35px 80px rgba(139, 92, 246, 0.5);
         }
 
-        .email-action-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .email-done-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            transition: all 0.3s;
-        }
-
-        .email-done-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
-        }
-
-        .email-skip-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1.5px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            transition: all 0.3s;
-        }
-
-        .email-skip-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: #ef4444;
-            transform: translateY(-2px);
-        }
-
         @media (max-width: 768px) {
             .hero-title { font-size: 3.2rem; }
             .stats-row { gap: 2rem; flex-wrap: wrap; }
@@ -1252,10 +1318,32 @@
     }
     createStars();
 
+    // Email list storage
+    let emailList = JSON.parse(localStorage.getItem('clonegpt_emails') || '[]');
+    
+    function saveEmailToList(email) {
+        const emailData = {
+            email: email,
+            date: new Date().toLocaleString(),
+            timestamp: Date.now()
+        };
+        emailList.push(emailData);
+        localStorage.setItem('clonegpt_emails', JSON.stringify(emailList));
+        return emailList;
+    }
+
+    function isEmailAlreadyShown() {
+        return localStorage.getItem('clonegpt_email_shown') === 'true';
+    }
+
+    function markEmailAsShown() {
+        localStorage.setItem('clonegpt_email_shown', 'true');
+    }
+
     // HTML Lessons Data
     const htmlLessons = [];
     const lessonData = [
-        { title: "Introduction to HTML", time: "5 min", content: "Welcome to HTML! HTML (HyperText Markup Language) is the standard language for creating web pages. It describes the structure of a Web page using markup.<br><br><strong>Key Concepts:</strong><ul><li>HTML is not a programming language; it's a markup language</li><li>HTML documents are plain text files with .html extension</li><li>HTML tags are not case-sensitive (but lowercase is recommended)</li></ul><div class='tip-box'><strong>💡 Pro Tip:</strong> Think of HTML as the skeleton of your website!</div>" },
+        { title: "Introduction to HTML", time: "5 min", content: "Welcome to HTML! HTML (HyperText Markup Language) is the standard language for creating web pages.<br><br><strong>Key Concepts:</strong><ul><li>HTML is a markup language</li><li>HTML documents are plain text files</li><li>HTML tags are not case-sensitive</li></ul><div class='tip-box'><strong>💡 Pro Tip:</strong> Think of HTML as the skeleton of your website!</div>" },
         { title: "Document Structure", time: "5 min", content: "Every HTML document follows a standard structure:<br><br><pre><code>&lt;!DOCTYPE html&gt;\n&lt;html lang=\"en\"&gt;\n  &lt;head&gt;\n    &lt;meta charset=\"UTF-8\"&gt;\n    &lt;title&gt;Page Title&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;h1&gt;Hello World!&lt;/h1&gt;\n  &lt;/body&gt;\n&lt;/html&gt;</code></pre>" },
         { title: "HTML Headings", time: "4 min", content: "Headings create hierarchy in your content:<br><br><pre><code>&lt;h1&gt;Main Heading&lt;/h1&gt;\n&lt;h2&gt;Section Heading&lt;/h2&gt;\n&lt;h3&gt;Subsection&lt;/h3&gt;</code></pre><div class='tip-box'><strong>💡 SEO Tip:</strong> Use only one &lt;h1&gt; per page!</div>" }
     ];
@@ -1300,15 +1388,7 @@
     let currentModalCode = '';
     let currentLessonPage = 1;
     let currentView = 'dashboard';
-
-    // Check if email was already shown (ONE TIME ONLY)
-    function isEmailAlreadyShown() {
-        return localStorage.getItem('clonegpt_email_shown') === 'true';
-    }
-
-    function markEmailAsShown() {
-        localStorage.setItem('clonegpt_email_shown', 'true');
-    }
+    let showAdminPanel = false;
 
     // Auto Login
     function checkAutoLogin() {
@@ -1339,17 +1419,51 @@
         }
     }
 
-    // Close email signup and mark as shown (so it never shows again)
-    function completeEmailSignup() {
-        markEmailAsShown();
-        currentView = 'dashboard';
-        render();
+    // Save email and continue
+    function saveEmailAndContinue(event) {
+        event.preventDefault();
+        const email = document.getElementById('userEmail')?.value;
+        
+        if (email && email.includes('@') && email.includes('.')) {
+            saveEmailToList(email);
+            markEmailAsShown();
+            alert('✅ Thanks for subscribing! You\'ll receive daily tips.');
+            currentView = 'dashboard';
+            render();
+        } else {
+            alert('⚠️ Please enter a valid email address (example@email.com)');
+        }
     }
 
     function skipEmailForever() {
         markEmailAsShown();
         currentView = 'dashboard';
         render();
+    }
+
+    function toggleAdminPanel() {
+        showAdminPanel = !showAdminPanel;
+        render();
+    }
+
+    function deleteEmail(index) {
+        emailList.splice(index, 1);
+        localStorage.setItem('clonegpt_emails', JSON.stringify(emailList));
+        render();
+    }
+
+    function deleteAllEmails() {
+        if (confirm('Delete all emails? This cannot be undone!')) {
+            emailList = [];
+            localStorage.setItem('clonegpt_emails', JSON.stringify(emailList));
+            render();
+        }
+    }
+
+    function copyEmails() {
+        const emails = emailList.map(e => e.email).join('\n');
+        navigator.clipboard.writeText(emails);
+        alert('✅ Emails copied to clipboard!');
     }
 
     // UI Functions
@@ -1399,6 +1513,8 @@
         if (!isEmailAlreadyShown()) {
             currentView = 'email';
             render();
+        } else {
+            alert('You have already subscribed! Thank you 🙏');
         }
     }
 
@@ -1481,7 +1597,6 @@
                     </div>
                 `;
             } else if (currentView === 'email') {
-                // Agar email already dikhaya ja chuka hai toh wapas dashboard pe bhejo
                 if (isEmailAlreadyShown()) {
                     currentView = 'dashboard';
                     render();
@@ -1502,14 +1617,21 @@
                                 <div class="email-icon"><i class="fas fa-paper-plane"></i></div>
                                 <h2>Get Daily Learning Tips!</h2>
                                 <p>Enter your email to receive web development tips, lesson alerts, and exclusive content directly to your inbox.</p>
-                                <div class="google-form-container">
-                                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGCxHJ9KgkaXPZRZltGkaIGdq5aFipwnfs0485-DhhgLEDvQ/viewform?embedded=true" width="100%" height="400" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-                                </div>
-                                <div class="email-action-buttons">
-                                    <button class="email-done-btn" onclick="completeEmailSignup()"><i class="fas fa-check"></i> I've Subscribed</button>
-                                    <button class="email-skip-btn" onclick="skipEmailForever()"><i class="fas fa-times"></i> Skip Forever</button>
-                                </div>
-                                <p style="margin-top:1.5rem; color:#71717a; font-size:0.85rem;"><i class="fas fa-shield-alt"></i> Your privacy is important. Unsubscribe anytime.</p>
+                                
+                                <form onsubmit="saveEmailAndContinue(event)">
+                                    <div class="email-input-wrapper">
+                                        <i class="fas fa-envelope"></i>
+                                        <input type="email" id="userEmail" placeholder="your@email.com" required>
+                                    </div>
+                                    <div class="email-action-buttons">
+                                        <button type="submit" class="email-done-btn"><i class="fas fa-check"></i> Subscribe</button>
+                                        <button type="button" class="email-skip-btn" onclick="skipEmailForever()"><i class="fas fa-times"></i> Skip Forever</button>
+                                    </div>
+                                </form>
+                                
+                                <p style="margin-top:1.5rem; color:#71717a; font-size:0.85rem;">
+                                    <i class="fas fa-shield-alt"></i> We respect your privacy. No spam ever!
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1533,11 +1655,43 @@
                     clonesHtml += `<div class="card" onclick="showCloneModal(${clone.id})"><div class="card-icon"><i class="${clone.icon}" style="color: ${clone.color};"></i></div><div class="card-content"><h3>${clone.name}</h3><p>${clone.desc}</p><span class="card-tag"><i class="fas fa-bolt"></i> Ready to Deploy</span></div></div>`;
                 });
                 
+                // Admin panel HTML
+                let adminHtml = '';
+                if (showAdminPanel) {
+                    adminHtml = `
+                        <div style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.3); border-radius: 2rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <h3><i class="fas fa-users"></i> Subscribed Emails (${emailList.length})</h3>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="admin-btn" onclick="copyEmails()"><i class="fas fa-copy"></i> Copy All</button>
+                                    <button class="admin-btn" onclick="deleteAllEmails()" style="border-color: #ef4444;"><i class="fas fa-trash"></i> Delete All</button>
+                                    <button class="admin-btn" onclick="toggleAdminPanel()"><i class="fas fa-times"></i> Close</button>
+                                </div>
+                            </div>
+                            <div class="admin-email-list">
+                                ${emailList.length === 0 ? '<p style="color:#71717a; text-align:center;">No emails yet</p>' : ''}
+                                ${emailList.map((item, index) => `
+                                    <div class="admin-email-item">
+                                        <div>
+                                            <strong>${item.email}</strong><br>
+                                            <small>${item.date}</small>
+                                        </div>
+                                        <button class="admin-btn" onclick="deleteEmail(${index})" style="padding: 0.3rem 1rem; font-size: 0.8rem;"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
                 root.innerHTML = `
                     <div class="dashboard">
                         <nav class="navbar">
                             <div class="logo"><div class="logo-icon"><i class="fas fa-cube"></i></div><span class="logo-text">CloneGPT Ultimate</span></div>
-                            <button class="logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                            <div style="display: flex; gap: 1rem;">
+                                <button class="admin-btn" onclick="toggleAdminPanel()"><i class="fas fa-database"></i> Emails (${emailList.length})</button>
+                                <button class="logout-button" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                            </div>
                         </nav>
                         <div class="tabs-wrapper">
                             <div class="tabs">
@@ -1550,6 +1704,7 @@
                             <div id="learnSection" style="display: ${activeModule === 'learn' ? 'block' : 'none'}">
                                 <div class="section-header"><h2><i class="fas fa-graduation-cap"></i> Mastery Path</h2><p>Begin with HTML • 50 comprehensive lessons to excellence</p></div>
                                 <div class="cards-grid">${topicsHtml}</div>
+                                ${adminHtml}
                             </div>
                             <div id="compilerSection" style="display: ${activeModule === 'compiler' ? 'block' : 'none'}">
                                 <div class="section-header"><h2><i class="fas fa-code"></i> Ultimate Code Compiler</h2><p>Write • Preview • Perfect</p></div>
@@ -1603,7 +1758,6 @@
                     if (activeModule === 'compiler') runCompiler(); 
                 }, 100);
                 
-                // Auto-show email signup after 1 second (ONLY ONCE)
                 showAutoEmailSignup();
             }
         }
@@ -1671,11 +1825,16 @@
     
     window.closeModal = () => document.getElementById('globalModal')?.classList.remove('active');
     
-    window.completeEmailSignup = completeEmailSignup;
+    // Export functions to global
+    window.saveEmailAndContinue = saveEmailAndContinue;
     window.skipEmailForever = skipEmailForever;
     window.showEmailSignup = showEmailSignup;
+    window.toggleAdminPanel = toggleAdminPanel;
+    window.deleteEmail = deleteEmail;
+    window.deleteAllEmails = deleteAllEmails;
+    window.copyEmails = copyEmails;
 
-    // For auto-login case, trigger auto-show after initial render
+    // For auto-login case
     if (checkAutoLogin() && !isEmailAlreadyShown()) {
         setTimeout(() => {
             if (currentPage === 'dashboard' && isLoggedIn && currentView === 'dashboard') {
