@@ -22,7 +22,6 @@
 
         ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #0a0a0f;
@@ -58,6 +57,7 @@
             background: radial-gradient(circle, #ffffff, rgba(255,255,255,0.3));
             border-radius: 50%;
             animation: starTwinkle 3s ease-in-out infinite;
+            will-change: opacity, transform;
         }
 
         @keyframes starTwinkle {
@@ -68,11 +68,11 @@
         .nebula {
             position: fixed;
             border-radius: 50%;
-            filter: blur(100px);
+            filter: blur(80px);
             opacity: 0.3;
             pointer-events: none;
             z-index: -1;
-            animation: nebulaFloat 25s ease-in-out infinite;
+            will-change: transform;
         }
 
         .nebula-1 {
@@ -81,6 +81,7 @@
             background: radial-gradient(circle, #6366f1, #8b5cf6);
             top: -20%;
             right: -15%;
+            animation: nebulaFloat 20s ease-in-out infinite;
         }
 
         .nebula-2 {
@@ -89,7 +90,7 @@
             background: radial-gradient(circle, #d946ef, #f43f5e);
             bottom: -15%;
             left: -20%;
-            animation-delay: -8s;
+            animation: nebulaFloat 25s ease-in-out infinite reverse;
         }
 
         .nebula-3 {
@@ -98,14 +99,14 @@
             background: radial-gradient(circle, #06b6d4, #3b82f6);
             top: 50%;
             left: 40%;
-            animation-delay: -16s;
+            animation: nebulaFloat 30s ease-in-out infinite;
         }
 
         @keyframes nebulaFloat {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            25% { transform: translate(3%, 4%) scale(1.08) rotate(90deg); }
-            50% { transform: translate(-2%, 6%) scale(0.95) rotate(180deg); }
-            75% { transform: translate(5%, -3%) scale(1.05) rotate(270deg); }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(3%, 4%) scale(1.05); }
+            50% { transform: translate(-2%, 6%) scale(0.98); }
+            75% { transform: translate(5%, -3%) scale(1.03); }
         }
 
         .start-page {
@@ -119,12 +120,12 @@
         .hero-content {
             text-align: center;
             max-width: 1100px;
-            animation: cinematicReveal 1.8s ease;
+            animation: cinematicReveal 1.2s ease;
         }
 
         @keyframes cinematicReveal {
-            0% { opacity: 0; transform: perspective(1000px) rotateX(-8deg) translateY(80px) scale(0.88); filter: blur(15px); }
-            100% { opacity: 1; transform: perspective(1000px) rotateX(0) translateY(0) scale(1); filter: blur(0); }
+            0% { opacity: 0; transform: translateY(60px) scale(0.9); filter: blur(10px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
         .hero-badge {
@@ -132,7 +133,7 @@
             align-items: center;
             gap: 0.75rem;
             background: rgba(99, 102, 241, 0.08);
-            backdrop-filter: blur(40px);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(99, 102, 241, 0.25);
             padding: 0.7rem 2rem;
             border-radius: 100px;
@@ -141,14 +142,6 @@
             color: #c7d2fe;
             margin-bottom: 3rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            animation: badgePulse 4s ease-in-out infinite;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 40px rgba(99, 102, 241, 0.2); }
-            50% { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 80px rgba(216, 70, 239, 0.4); }
         }
 
         .hero-title {
@@ -161,18 +154,13 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: titleShine 6s linear infinite, titleFloat 8s ease-in-out infinite;
+            animation: titleShine 6s linear infinite;
             letter-spacing: -1.5px;
         }
 
         @keyframes titleShine {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
-        }
-
-        @keyframes titleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
         }
 
         .hero-subtitle {
@@ -187,6 +175,7 @@
             gap: 6rem;
             justify-content: center;
             margin-bottom: 4rem;
+            flex-wrap: wrap;
         }
 
         .stat {
@@ -233,7 +222,7 @@
             font-weight: 700;
             border-radius: 100px;
             cursor: pointer;
-            transition: all 0.5s;
+            transition: transform 0.3s, box-shadow 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 1.2rem;
@@ -257,18 +246,18 @@
 
         .login-container {
             background: rgba(20, 20, 35, 0.35);
-            backdrop-filter: blur(50px);
+            backdrop-filter: blur(30px);
             border-radius: 3.5rem;
             padding: 4rem;
             width: 100%;
             max-width: 500px;
             border: 1px solid rgba(139, 92, 246, 0.2);
             box-shadow: 0 50px 100px rgba(0,0,0,0.6);
-            animation: loginReveal 0.8s ease;
+            animation: loginReveal 0.6s ease;
         }
 
         @keyframes loginReveal {
-            0% { opacity: 0; transform: scale(0.92) translateY(50px); }
+            0% { opacity: 0; transform: scale(0.95) translateY(40px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
@@ -361,16 +350,10 @@
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            animation: buttonGradient 4s ease infinite;
             margin-top: 1rem;
-        }
-
-        @keyframes buttonGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
 
         .login-submit:hover {
@@ -389,18 +372,16 @@
             padding: 3rem;
             max-width: 600px;
             margin: 0 auto;
-            position: relative;
         }
 
         .email-card {
             background: rgba(20, 20, 35, 0.4);
-            backdrop-filter: blur(40px);
+            backdrop-filter: blur(30px);
             border: 1.5px solid rgba(139, 92, 246, 0.12);
             border-radius: 2.5rem;
             padding: 2.5rem;
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             text-align: center;
-            position: relative;
         }
 
         .email-icon {
@@ -509,7 +490,7 @@
             position: sticky;
             top: 0;
             background: rgba(10, 10, 15, 0.7);
-            backdrop-filter: blur(50px);
+            backdrop-filter: blur(30px);
             border-bottom: 1px solid rgba(139, 92, 246, 0.1);
             padding: 1.2rem 3rem;
             display: flex;
@@ -533,12 +514,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
-            animation: iconPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         .logo-icon i {
@@ -584,6 +559,7 @@
         .tabs {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .tab {
@@ -643,19 +619,20 @@
 
         .card {
             background: rgba(20, 20, 35, 0.4);
-            backdrop-filter: blur(40px);
+            backdrop-filter: blur(25px);
             border: 1.5px solid rgba(139, 92, 246, 0.12);
             border-radius: 2.5rem;
             overflow: hidden;
-            transition: all 0.5s;
+            transition: all 0.4s;
             cursor: pointer;
             position: relative;
+            will-change: transform;
         }
 
         .card:hover {
-            transform: translateY(-12px) scale(1.02);
+            transform: translateY(-10px) scale(1.01);
             border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 50px 80px rgba(0,0,0,0.5), 0 0 80px rgba(139, 92, 246, 0.25);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.4);
         }
 
         .new-badge {
@@ -669,8 +646,6 @@
             font-size: 0.8rem;
             font-weight: 800;
             z-index: 10;
-            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
-            animation: badgeGlow 2.5s infinite;
             letter-spacing: 1.5px;
         }
 
@@ -685,14 +660,7 @@
             font-size: 0.8rem;
             font-weight: 700;
             z-index: 10;
-            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
-            animation: badgeGlow 2.5s infinite 0.8s;
             letter-spacing: 1.5px;
-        }
-
-        @keyframes badgeGlow {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         .card-icon {
@@ -748,11 +716,11 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-            animation: slideIn 0.7s ease;
+            animation: slideIn 0.5s ease;
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(40px); }
+            from { opacity: 0; transform: translateX(30px); }
             to { opacity: 1; transform: translateX(0); }
         }
 
@@ -768,6 +736,7 @@
             align-items: center;
             gap: 0.8rem;
             font-weight: 600;
+            transition: all 0.3s;
         }
 
         .back-to-dashboard:hover {
@@ -785,6 +754,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .lesson-progress {
@@ -809,7 +780,7 @@
 
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: rgba(139, 92, 246, 0.08);
             border-radius: 20px;
             overflow: hidden;
@@ -820,19 +791,13 @@
             background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef);
             background-size: 200% 200%;
             border-radius: 20px;
-            transition: width 0.8s;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
-            animation: gradientShift 4s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            transition: width 0.5s;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
         }
 
         .lesson-content {
             background: rgba(20, 20, 35, 0.4);
-            backdrop-filter: blur(50px);
+            backdrop-filter: blur(30px);
             border: 1.5px solid rgba(139, 92, 246, 0.12);
             border-radius: 3rem;
             padding: 3.5rem;
@@ -886,6 +851,8 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .nav-btn {
@@ -925,7 +892,7 @@
 
         .compiler-container {
             background: rgba(20, 20, 35, 0.4);
-            backdrop-filter: blur(50px);
+            backdrop-filter: blur(30px);
             border: 1.5px solid rgba(139, 92, 246, 0.12);
             border-radius: 3rem;
             overflow: hidden;
@@ -938,6 +905,7 @@
             border-bottom: 1.5px solid rgba(139, 92, 246, 0.15);
             padding: 1.2rem;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .compiler-tab {
@@ -1028,7 +996,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(60px);
+            backdrop-filter: blur(40px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -1036,7 +1004,7 @@
 
         .modal.active {
             display: flex;
-            animation: modalFade 0.5s ease;
+            animation: modalFade 0.3s ease;
         }
 
         @keyframes modalFade {
@@ -1046,7 +1014,7 @@
 
         .modal-window {
             background: rgba(20, 20, 35, 0.8);
-            backdrop-filter: blur(70px);
+            backdrop-filter: blur(40px);
             border-radius: 3.5rem;
             width: 90%;
             max-width: 1300px;
@@ -1054,16 +1022,10 @@
             overflow: hidden;
             border: 1.5px solid rgba(139, 92, 246, 0.25);
             box-shadow: 0 60px 120px rgba(0,0,0,0.8);
-            animation: modalSlide 0.6s ease;
-        }
-
-        @keyframes modalSlide {
-            from { opacity: 0; transform: translateY(60px) scale(0.92); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .modal-header {
-            padding: 2.2rem 3rem;
+            padding: 2rem 3rem;
             background: rgba(0, 0, 0, 0.3);
             border-bottom: 1.5px solid rgba(139, 92, 246, 0.15);
             display: flex;
@@ -1108,6 +1070,7 @@
             display: flex;
             gap: 1.5rem;
             margin-bottom: 2.5rem;
+            flex-wrap: wrap;
         }
 
         .modal-btn {
@@ -1207,7 +1170,6 @@
             background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef);
             background-size: 200% 200%;
             border-radius: 20px;
-            animation: gradientShift 4s ease infinite;
         }
 
         .notify-btn {
@@ -1223,7 +1185,6 @@
             box-shadow: 0 20px 50px rgba(99, 102, 241, 0.35);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            animation: gradientShift 4s ease infinite;
         }
 
         .notify-btn:hover {
@@ -1232,14 +1193,16 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 3.2rem; }
-            .stats-row { gap: 2rem; flex-wrap: wrap; }
+            .hero-title { font-size: 3rem; }
+            .stats-row { gap: 2rem; }
             .stat:not(:first-child)::before { display: none; }
             .cards-grid { grid-template-columns: 1fr; }
             .navbar { padding: 1rem 1.5rem; }
             .tabs-wrapper { padding: 1.2rem 1.5rem 0 1.5rem; }
             .content-area { padding: 1.5rem; }
-            .lesson-content { padding: 2rem; }
+            .lesson-content { padding: 1.5rem; }
+            .hero-btn { padding: 1rem 2rem; font-size: 1rem; }
+            .login-container { padding: 2rem; margin: 1rem; }
         }
     </style>
 </head>
@@ -1252,10 +1215,10 @@
 <div id="root"></div>
 
 <script>
-    // Create stars
+    // Create stars - 120 stars (balance between visual and performance)
     function createStars() {
         const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 250; i++) {
+        for (let i = 0; i < 120; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             const size = Math.random() * 4 + 1;
@@ -1270,24 +1233,19 @@
     }
     createStars();
 
-    // ✅ Google Apps Script URL (Working - Tested)
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2ZqaF0J5lOQkAcz1gJwNsdTEcdkZefph4L3vNms0IPYRv34nkyH5gup7OBsfR4ACRww/exec";
     
-    // Email send karne ka function (Background mein - koi app nahi khulega)
     function sendEmailToAdmin(userEmail) {
         const formData = new FormData();
         formData.append('email', userEmail);
         formData.append('timestamp', new Date().toLocaleString());
         formData.append('device', navigator.userAgent);
         
-        // Background mein fetch se email send karo
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             body: formData
         }).catch(err => console.log('Email send error:', err));
-        
-        return true;
     }
 
     function isEmailAlreadyShown() {
@@ -1306,7 +1264,6 @@
         { title: "HTML Headings", time: "4 min", content: "Headings create hierarchy in your content:<br><br><pre><code>&lt;h1&gt;Main Heading&lt;/h1&gt;\n&lt;h2&gt;Section Heading&lt;/h2&gt;\n&lt;h3&gt;Subsection&lt;/h3&gt;</code></pre><div class='tip-box'><strong>💡 SEO Tip:</strong> Use only one &lt;h1&gt; per page!</div>" }
     ];
 
-    // Generate 50 lessons
     for (let i = 1; i <= 50; i++) {
         let content = '';
         let time = '5 min';
@@ -1321,7 +1278,6 @@
         htmlLessons.push({ content, time });
     }
 
-    // Learning Topics
     const learningTopics = [
         { id: 1, title: "HTML Mastery", icon: "fa-code", desc: "50 comprehensive lessons from basics to advanced", color: "#6366f1", status: "available", isNew: true },
         { id: 2, title: "CSS Wizardry", icon: "fa-palette", desc: "Transform designs into stunning reality", color: "#d946ef", status: "coming-soon", isNew: false },
@@ -1329,7 +1285,6 @@
         { id: 4, title: "📧 Email Signup", icon: "fa-envelope", desc: "Get daily learning tips and updates", color: "#10b981", status: "available", isNew: true }
     ];
 
-    // Website Clones
     const websiteClones = [
         { id: 1, name: "X (Twitter)", icon: "fa-brands fa-x-twitter", color: "#ffffff", desc: "Real-time social platform", status: "available" },
         { id: 2, name: "Instagram Pro", icon: "fa-brands fa-instagram", color: "#E4405F", desc: "Visual storytelling", status: "available" },
@@ -1339,15 +1294,13 @@
         { id: 6, name: "Discord Hub", icon: "fa-brands fa-discord", color: "#5865F2", desc: "Community platform", status: "available" }
     ];
 
-    // State
     let currentPage = 'start';
     let isLoggedIn = false;
     let activeModule = 'learn';
+    let currentView = 'dashboard';
     let currentModalCode = '';
     let currentLessonPage = 1;
-    let currentView = 'dashboard';
 
-    // Auto Login
     function checkAutoLogin() {
         return localStorage.getItem('clonegpt_ultimate_logged_in') === 'true';
     }
@@ -1357,12 +1310,10 @@
         currentPage = 'dashboard';
     }
 
-    // Clone Code Generator
     function generateCloneCode(clone) {
         return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${clone.name}</title><style>body{font-family:system-ui;background:linear-gradient(135deg,#6366f1,#8b5cf6,#d946ef);min-height:100vh;display:flex;justify-content:center;align-items:center;margin:0;padding:20px}.card{background:rgba(255,255,255,0.95);backdrop-filter:blur(30px);border-radius:40px;padding:60px;text-align:center;max-width:500px;box-shadow:0 40px 80px rgba(0,0,0,0.3)}h1{background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:20px;font-size:2.5rem}p{color:#4a5568;margin-bottom:30px;line-height:1.8}.btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;padding:16px 36px;border-radius:50px;cursor:pointer;font-weight:700;transition:all 0.3s}.btn:hover{transform:translateY(-3px)scale(1.05);box-shadow:0 25px 60px rgba(99,102,241,0.6)}</style></head><body><div class="card"><h1>✨ ${clone.name} ✨</h1><p>${clone.desc}</p><button class="btn" onclick="alert('🚀 Welcome!')">Launch →</button></div></body></html>`;
     }
 
-    // Function to show email signup automatically after 1 second (ONLY ONCE)
     let autoEmailTriggered = false;
     function showAutoEmailSignup() {
         if (!autoEmailTriggered && currentPage === 'dashboard' && isLoggedIn && currentView === 'dashboard' && !isEmailAlreadyShown()) {
@@ -1376,18 +1327,13 @@
         }
     }
 
-    // Save email and send to admin (Background mein - koi app nahi khulega)
     function saveEmailAndSend(event) {
         event.preventDefault();
         const email = document.getElementById('userEmail')?.value;
         
         if (email && email.includes('@') && email.includes('.')) {
-            // Background mein email send karo
             sendEmailToAdmin(email);
-            
-            // Local storage mein mark karo
             markEmailAsShown();
-            
             alert('✅ Thanks for subscribing! You will receive daily tips.');
             currentView = 'dashboard';
             render();
@@ -1402,7 +1348,6 @@
         render();
     }
 
-    // UI Functions
     function showComingSoon(itemName) {
         document.getElementById('comingSoonTitle').textContent = `✨ ${itemName} ✨`;
         document.getElementById('comingSoonItem').textContent = itemName;
@@ -1454,7 +1399,6 @@
         }
     }
 
-    // Render Engine
     function render() {
         const root = document.getElementById('root');
         
@@ -1666,7 +1610,6 @@
         }
     }
 
-    // Core Functions
     window.goToLogin = () => { currentPage = 'login'; render(); };
     
     window.handleLogin = () => { 
@@ -1728,12 +1671,10 @@
     
     window.closeModal = () => document.getElementById('globalModal')?.classList.remove('active');
     
-    // Export functions to global
     window.saveEmailAndSend = saveEmailAndSend;
     window.skipEmailForever = skipEmailForever;
     window.showEmailSignup = showEmailSignup;
 
-    // For auto-login case
     if (checkAutoLogin() && !isEmailAlreadyShown()) {
         setTimeout(() => {
             if (currentPage === 'dashboard' && isLoggedIn && currentView === 'dashboard') {
